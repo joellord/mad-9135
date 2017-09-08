@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bacon Ipsum Restaurant</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<div id="react-app"></div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/react/0.14.0-rc1/react.js"></script>
+<script src="https://cdn.jsdelivr.net/react/0.14.0-rc1/react-dom.js"></script>
+<script type="text/javascript">
+
+    let AddNewForm = React.createClass({
+        propTypes: {
+            menuItem: React.PropTypes.object.isRequired,
+            onChange: React.PropTypes.func.isRequired
+        },
+        render: function() {
+            return (
+                React.createElement("form", {},
+                    React.createElement("input", {
+                        type: "text",
+                        placeholder: "Name",
+                        value: this.props.menuItem.name,
+                        onChange: (e) => {this.props.onChange(Object.assign({}, this.props.menuItem, {name: e.target.value}))}
+                    }),
+                    React.createElement("input", {
+                        type: "text",
+                        placeholder: "Price",
+                        value: this.props.menuItem.price,
+                        onChange: (e) => {this.props.onChange(Object.assign({}, this.props.menuItem, {price: e.target.value}))}
+                    }),
+                    React.createElement("textarea", {
+                        placeholder: "Description",
+                        value: this.props.menuItem.description,
+                        onChange: (e) => {this.props.onChange(Object.assign({}, this.props.menuItem, {description: e.target.value}))}
+                    }),
+                    React.createElement("button", {type: "button"}, "Submit")
+                )
+            )
+        }
+    });
+
+    let FormView = React.createClass({
+        propTypes: {
+            menuItem: React.PropTypes.object.isRequired,
+            onNewMenuItemChange: React.PropTypes.func.isRequired
+        },
+        render: function() {
+            return (
+                React.createElement("div", {},
+                    React.createElement("div", {}, "New element: " + this.props.menuItem.name + " -- " + this.props.menuItem.price + "$"),
+                    React.createElement(AddNewForm, {menuItem: this.props.menuItem, onChange: this.props.onNewMenuItemChange}),
+                )
+            )
+        }
+    });
+
+    function updateNewMenuItem(item) {
+        setState({menuItem: item});
+    }
+
+    let state = {};
+
+    function setState(changes) {
+        // Let's apply the changes on our current state
+        Object.assign(state, changes);
+
+        // And re-render our page
+        ReactDOM.render(
+            React.createElement(FormView, Object.assign({}, state, {
+                onNewMenuItemChange: updateNewMenuItem,
+            })),
+            document.getElementById('react-app')
+        );
+    }
+
+    // Set initial data
+    setState({
+        menuItem:{
+            name: "",
+            price: "",
+            description: ""
+        }
+    });
+
+
+</script>
+
+</html>

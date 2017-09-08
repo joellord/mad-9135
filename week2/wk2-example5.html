@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bacon Ipsum Restaurant</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<div id="react-app"></div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/react/0.14.0-rc1/react.js"></script>
+<script src="https://cdn.jsdelivr.net/react/0.14.0-rc1/react-dom.js"></script>
+<script type="text/javascript">
+
+var menuItems = [
+    {key: 1, name: "Beer-braised Lime & Sheltered Artichoke Pate"},
+    {key: 2, name: "Artisanal Farfalle Croquettes", price: "15", gluten_free: true},
+    {key: 3, name: "Sardine Panini With Oyster Puree & Quickened Monkfish", price: "25", description: "A panini bread made with fresh Atlantic sardines garnished with fresh Prince Edward Island oysters puree and drizzled with Monkfish sauce."}
+];
+
+var footerCredits = [
+    {key: 1, text: "Restaurant Logo by ", link: "http://freedesignfile.com/"},
+    {key: 2, text: "Menu items generated with ", link: "http://www.brooklynbarmenus.com/"}
+];
+
+var MenuItem = React.createClass({
+    propTypes: {
+        name: React.PropTypes.string.isRequired,
+        price: React.PropTypes.string.isRequired,
+        description: React.PropTypes.string,
+        gluten_free: React.PropTypes.boolean
+    },
+
+    render: function() {
+        return (
+            React.createElement("li", {},
+                React.createElement("h2", {className: this.props.gluten_free ? "gluten_free" : ""}, this.props.name),
+                React.createElement("div", {className: "price"}, this.props.price),
+                React.createElement("div", {}, this.props.description)
+            )
+        )
+    }
+});
+
+var MenuItems = React.createClass({
+    propTypes: {
+        items: React.PropTypes.array.isRequired
+    },
+
+    render: function() {
+        return (
+            React.createElement("ul", {}, this.props.items.map(i => React.createElement(MenuItem, i)))
+        )
+    }
+});
+
+var AddNewForm = React.createClass({
+    propTypes: {
+
+    },
+    render: function() {
+        return (
+            React.createElement("form", {},
+                React.createElement("input", {type: "text", placeholder: "Name"}),
+                React.createElement("input", {type: "text", placeholder: "Price"}),
+                React.createElement("textarea", {placeholder: "Description"}),
+                React.createElement("button", {type: "button"}, "Submit")
+            )
+        )
+    }
+});
+
+var FooterItem = React.createClass({
+    propTypes: {
+        text: React.PropTypes.string,
+        link: React.PropTypes.string
+    },
+    render: function() {
+        return (
+            React.createElement("p", {className: "footer"},
+                this.props.text,
+                React.createElement("a", {href: this.props.link}, this.props.link)
+            )
+        )
+    }
+});
+
+var FooterItems = React.createClass({
+    propTypes: {
+        items: React.PropTypes.array
+    },
+    render: function() {
+        return (
+            React.createElement("div", {}, this.props.items.map(i => React.createElement(FooterItem, i)))
+        )
+    }
+});
+
+var Header = React.createClass({
+    propTypes: {
+    },
+    render: function() {
+        return(
+            React.createElement("div", {className: "header"},
+                React.createElement("p", {}, "Bacon Ipsum Restaurant"),
+                React.createElement("p", {className: "logo"},
+                    React.createElement("img", {src: "http://www.javascripteverything.com/algonquin/resto_logo.png", width: "150px"}, "")
+                )
+            )
+        )
+    }
+});
+
+
+var rootElement =
+    React.createElement("div", {},
+        React.createElement(Header, {}),
+        React.createElement(MenuItems, {items: menuItems}),
+        React.createElement(AddNewForm, {}),
+        React.createElement(FooterItems, {items: footerCredits})
+    );
+
+ReactDOM.render(rootElement, document.getElementById("react-app"));
+
+</script>
+
+</html>

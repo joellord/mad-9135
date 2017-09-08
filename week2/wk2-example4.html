@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bacon Ipsum Restaurant</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<div class="header">
+    <p>Bacon Ipsum Restaurant</p>
+    <p class="logo">
+        <img src="http://www.javascripteverything.com/algonquin/resto_logo.png" width="150px"/>
+    </p>
+</div>
+
+<div id="react-app"></div>
+
+
+<p class="footer">Restaurant Logo by <a href="http://freedesignfile.com/" target="_blank">http://freedesignfile.com/</a></p>
+<p class="footer">Menu items generated with <a href="http://www.brooklynbarmenus.com/" target="_blank">http://www.brooklynbarmenus.com/</a></p>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/react/0.14.0-rc1/react.js"></script>
+<script src="https://cdn.jsdelivr.net/react/0.14.0-rc1/react-dom.js"></script>
+<script type="text/javascript">
+
+var items = [
+    {key: 1, name: "Beer-braised Lime & Sheltered Artichoke Pate"},
+    {key: 2, name: "Artisanal Farfalle Croquettes", price: "15", gluten_free: true},
+    {key: 3, name: "Sardine Panini With Oyster Puree & Quickened Monkfish", price: "25", description: "A panini bread made with fresh Atlantic sardines garnished with fresh Prince Edward Island oysters puree and drizzled with Monkfish sauce."}
+];
+
+var MenuItem = React.createClass({
+    propTypes: {
+        name: React.PropTypes.string.isRequired,
+        price: React.PropTypes.string.isRequired,
+        description: React.PropTypes.string,
+        gluten_free: React.PropTypes.boolean
+    },
+
+    render: function() {
+        return (
+            React.createElement("li", {},
+                React.createElement("h2", {className: this.props.gluten_free ? "gluten_free" : ""}, this.props.name),
+                React.createElement("div", {className: "price"}, this.props.price),
+                React.createElement("div", {}, this.props.description)
+            )
+        )
+    }
+});
+
+var MenuItems = React.createClass({
+    propTypes: {
+        items: React.PropTypes.array.isRequired
+    },
+
+    render: function() {
+        return (
+            React.createElement("ul", {}, this.props.items.map(i => React.createElement(MenuItem, i)))
+        )
+    }
+});
+
+
+var rootElement =
+    React.createElement("div", {},
+        React.createElement(MenuItems, {items})
+    );
+
+ReactDOM.render(rootElement, document.getElementById("react-app"));
+
+</script>
+
+</html>
