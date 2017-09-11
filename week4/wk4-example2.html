@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bacon Ipsum Restaurant</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<div id="react-app"></div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/react/0.14.0-rc1/react.js"></script>
+<script src="https://cdn.jsdelivr.net/react/0.14.0-rc1/react-dom.js"></script>
+<script type="text/javascript">
+
+let NavMenu = React.createClass({
+    render: function() {
+        return (
+            React.createElement("ul", {className: "nav-menu"},
+                React.createElement("li", {},
+                    React.createElement("a", {href: "#menu"}, "Menu")
+                ),
+
+                React.createElement("li", {},
+                    React.createElement("a", {href: "#"}, "Main View")
+                ),
+
+                React.createElement("li", {},
+                    React.createElement("a", {href: "#newitem"}, "Add new item")
+                ),
+                React.createElement("li", {},
+                    React.createElement("a", {href: "#bacon"}, "Non existent section")
+                )
+            )
+        )
+    }
+});
+
+let MainPage = React.createClass({
+    render: function () {
+        return (
+            React.createElement("div", {},
+                React.createElement(NavMenu, {}),
+                React.createElement("div", {}, "This is the main page")
+            )
+        )
+    }
+});
+
+let MenuPage = React.createClass({
+    render: function() {
+        return (
+            React.createElement("div", {},
+                React.createElement(NavMenu, {}),
+                React.createElement("div", {}, "This is the menu page")
+            )
+        )
+    }
+});
+
+let AddNewItemPage = React.createClass({
+    render: function() {
+        return (
+            React.createElement("div", {},
+                React.createElement(NavMenu, {}),
+                React.createElement("div", {}, "New item form goes here")
+            )
+        )
+    }
+});
+
+let state = {
+    location: ""
+};
+
+function setState(changes) {
+    let component;
+
+    Object.assign(state, changes);
+
+    switch(state.location) {
+        case "#menu":
+            component = MenuPage;
+            break;
+        case "#newitem":
+            component = AddNewItemPage;
+            break;
+        default:
+            component = MainPage;
+    }
+
+    ReactDOM.render(React.createElement(component, {}), document.getElementById("react-app"));
+}
+
+window.addEventListener('hashchange', ()=>setState({location: location.hash}));
+
+//Start the app by declaring the initial state
+setState({location: location.hash});
+</script>
+
+</html>
