@@ -1,0 +1,91 @@
+ul {
+    list-style: none;
+    /*border: solid blue 2px;*/
+}
+
+li {
+    /*border: solid red 2px;*/
+}
+
+h2 {
+    font-size: 1.1em;
+    display: inline-block;
+}
+
+.footer {
+    font-size: 0.5em;
+    color: lightgray;
+    /*border: solid pink 2px;*/
+}
+
+.header {
+    /*border: solid purple 2px;*/
+    font-size: 1.4em;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.price {
+    float: right;
+    font-family: Arial, sans-serif;
+    font-style: italic;
+    margin: 14px 20px;
+}
+
+.footer:first-of-type {
+    margin-top: 200px;
+}
+
+.gluten_free:after {
+    font-size: 0.5em;
+    content: "** Gluten-free";
+    vertical-align: super;
+    margin-left: 15px;
+}
+
+form {
+    padding: 8px 24px;
+}
+form > input,
+form > button,
+form > textarea {
+    display: block;
+    width: 240px;
+    padding: 4px 8px;
+    margin-bottom: 8px;
+    border-radius: 3px;
+    border: 1px solid #888;
+    font-size: 14px;
+    background: none;
+    box-shadow:none;
+}
+
+.nav-menu {
+    list-style-type: none;
+    font-size: 1.2em;
+    font-family: Arial,sans-serif;
+    background-color: darkred;
+    color: cornsilk;
+    font-weight: bold;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.nav-menu li {
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+}
+
+.nav-menu a:visited, a:link {
+    color: cornsilk;
+}
+
+.menu-item-link a, a:visited, a:link {
+    color: black;
+    text-decoration: none;
+}
+
+.menu-item-link a:hover {
+    text-decoration: underline;
+}

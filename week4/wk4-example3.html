@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bacon Ipsum Restaurant</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<div id="react-app"></div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/react/0.14.0-rc1/react.js"></script>
+<script src="https://cdn.jsdelivr.net/react/0.14.0-rc1/react-dom.js"></script>
+<script type="text/javascript">
+
+var menuItems = [
+    {key: 1, name: "Beer-braised Lime & Sheltered Artichoke Pate"},
+    {key: 2, name: "Artisanal Farfalle Croquettes", price: "15", gluten_free: true},
+    {key: 3, name: "Sardine Panini With Oyster Puree & Quickened Monkfish", price: "25", description: "A panini bread made with fresh Atlantic sardines garnished with fresh Prince Edward Island oysters puree and drizzled with Monkfish sauce."}
+];
+
+let NavMenu = React.createClass({
+    render: function() {
+        return (
+            React.createElement("ul", {className: "nav-menu"},
+                React.createElement("li", {},
+                    React.createElement("a", {href: "#menu"}, "Menu")
+                ),
+
+                React.createElement("li", {},
+                    React.createElement("a", {href: "#"}, "Main View")
+                ),
+
+                React.createElement("li", {},
+                    React.createElement("a", {href: "#newitem"}, "Add new item")
+                ),
+                React.createElement("li", {},
+                    React.createElement("a", {href: "#item/2"}, "Item #2")
+                )
+            )
+        )
+    }
+});
+
+let MainPage = React.createClass({
+    render: function () {
+        return (
+            React.createElement("div", {},
+                React.createElement(NavMenu, {}),
+                React.createElement("div", {}, "This is the main page")
+            )
+        )
+    }
+});
+
+let MenuPage = React.createClass({
+    render: function() {
+        return (
+            React.createElement("div", {},
+                React.createElement(NavMenu, {}),
+                React.createElement("div", {}, "This is the menu page")
+            )
+        )
+    }
+});
+
+let AddNewItemPage = React.createClass({
+    render: function() {
+        return (
+            React.createElement("div", {},
+                React.createElement(NavMenu, {}),
+                React.createElement("div", {}, "New item form goes here")
+            )
+        )
+    }
+});
+
+let ItemPage = React.createClass({
+    render: function() {
+        return (
+            React.createElement("div", {},
+                React.createElement(NavMenu, {}),
+                React.createElement("h2", {}, this.props.name),
+                React.createElement("p", {}, this.props.price),
+                React.createElement("p", {}, this.props.description)
+            )
+        )
+    }
+});
+
+let state = {
+    location: ""
+};
+
+function setState(changes) {
+    let component;
+    let componentProperties = {};
+
+    Object.assign(state, changes);
+
+    let splittedUrl = state.location.replace(/^#\/?|\/$/g, "").split("/");
+
+    switch(splittedUrl[0]) {
+        case "menu":
+            component = MenuPage;
+            break;
+        case "newitem":
+            component = AddNewItemPage;
+            break;
+        case "item":
+            component = ItemPage;
+            componentProperties = menuItems.find(i => i.key == splittedUrl[1]);
+            break;
+        default:
+            component = MainPage;
+    }
+
+    ReactDOM.render(React.createElement(component, componentProperties), document.getElementById("react-app"));
+}
+
+window.addEventListener('hashchange', ()=>setState({location: location.hash}));
+
+//Start the app by declaring the initial state
+setState({location: location.hash});
+</script>
+
+</html>
