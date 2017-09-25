@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="react-app"></div>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/react/0.14.0-rc1/react.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/react/0.14.0-rc1/react-dom.js"></script>
+
+<script>
+    var contacts = [
+        {key: 1, id: 1, name: "Joel Lord", email: "lordj1@algonquincollege.com"},
+        {key: 2, id: 2, name: "John Doe", email: "doej@algonquincollege.com"}
+    ];
+
+    var Contact = React.createClass({
+        propTypes: {
+            "name": React.PropTypes.string.isRequired,
+            "email": React.PropTypes.string,
+            "deleteButtonClicked": React.PropTypes.func
+        },
+
+        deleteButtonClicked: function(e) {
+            var id = e.target.id.split("-")[1];
+            this.props.deleteButtonClicked(id);
+        },
+
+        render: function() {
+            return (
+                React.createElement("li", {},
+                    React.createElement("div", {}, this.props.name),
+                    React.createElement("a", {href: "mailto:" + this.props.email},
+                        this.props.email
+                    ),
+                    React.createElement("button", {onClick: this.deleteButtonClicked, id: "button-" + this.props.id}, "X")
+                )
+            )
+        }
+    });
+
+    var ContactList = React.createClass({
+        propTypes: {
+            "contactList": React.PropTypes.array,
+            "onElementRemoved": React.PropTypes.func
+        },
+
+        onDeleteButtonClicked: function(id) {
+            this.props.onElementRemoved(id);
+        },
+
+        render: function () {
+
+            var allContacts = this.props.contactList.map((c) => React.createElement(Contact, Object.assign(c, {deleteButtonClicked: this.onDeleteButtonClicked})));
+            return (
+                React.createElement("ul", {},
+                    allContacts
+                )
+            )
+        }
+    });
+
+    function deleteContactFromList(id) {
+        var list = state.contacts;
+        var cleanList = [];
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].id != id) cleanList.push(list[i]);
+        }
+        setState({contacts: cleanList});
+    }
+
+    var state = {};
+
+    function setState(changes) {
+        state = Object.assign({}, state, changes);
+
+        var mainView = React.createElement(ContactList, {contactList: state.contacts, onElementRemoved: deleteContactFromList});
+        ReactDOM.render(mainView, document.getElementById("react-app"));
+    }
+
+    setState({contacts: contacts});
+
+</script>
+
+</body>
+</html>
