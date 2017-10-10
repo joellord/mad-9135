@@ -1,0 +1,7 @@
+{
+  "name": "week6",
+  "version": "0.0.1",
+  "dependencies": {
+    "webpack": "^3.6.0"
+  }
+}

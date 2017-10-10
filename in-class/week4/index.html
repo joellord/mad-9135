@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="react-app"></div>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/react/0.14.0-rc1/react.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/react/0.14.0-rc1/react-dom.js"></script>
+
+<script>
+    //Javascript goes here !
+    var ListItem = React.createClass({
+        propTypes: {
+            "id": React.PropTypes.number,
+            "name": React.PropTypes.string,
+            "email": React.PropTypes.string,
+            "onDeleteButtonClicked": React.PropTypes.func
+        },
+
+        render: function() {
+            return (
+                React.createElement("li", {},
+                    React.createElement("span", {}, this.props.name),
+                    React.createElement("a", {href: "mailto:" + this.props.email}, this.props.email),
+                    React.createElement("button", {
+                        id: "deleteBtn-" + this.props.id,
+                        onClick: this.props.onDeleteButtonClicked
+                    }, "X")
+                )
+            )
+        }
+    });
+
+    var List = React.createClass({
+        propTypes: {
+            "items": React.PropTypes.array,
+            "deleteElement": React.PropTypes.func
+        },
+
+        render: function() {
+            var deleteElementCallback = this.props.deleteElement;
+            var listOfListItems = this.props.items.map(function(item) {
+                item.onDeleteButtonClicked = deleteElementCallback;
+                return React.createElement(ListItem, item);
+            });
+
+
+            return (
+                React.createElement("ul", {},
+                    listOfListItems
+                )
+            );
+        }
+    });
+
+    var state = {};
+
+    function deleteItem(e) {
+        var elementId = e.target.id.split("-")[1];
+
+        alert(elementId);
+
+        var newArray = [];
+        var items = state.items;
+        for(var i = 0; i < items.length; i++) {
+            if (items[i].id != elementId) newArray.push(items[i]);
+        }
+
+        setState({items: newArray});
+    };
+
+    function setState(changes) {
+        state = Object.assign({}, state, changes);
+
+        state.deleteElement = deleteItem;
+
+        var MainView = React.createElement(List, state);
+
+        ReactDOM.render(MainView, document.getElementById("react-app"));
+    }
+
+    setState({
+        items: [
+            {key: 1, id: 1, name: "Joel Lord", email: "lordj1@algonquincollege.com"},
+            {key: 2, id: 2, name: "John Doe", email: "doej@algonquincollege.com"}
+        ]
+    });
+
+</script>
+
+</body>
+</html>
