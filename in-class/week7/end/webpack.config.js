@@ -16,6 +16,11 @@ var webpackConfig = {
         loaders: [
             {
                 test: /\.js$/,
+                use: "eslint-loader",
+                exclude: /node_modules/
+            },
+            {
+                test: /\.js$/,
                 use: "babel-loader"
             },
             {
