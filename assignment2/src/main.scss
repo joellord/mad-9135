@@ -1,0 +1,50 @@
+body {
+  height: 100%;
+}
+
+h1 {
+  font-family: Arial, sans-serif;
+  margin-left: 20px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  padding-left: 20px;
+  margin-bottom: 5px;
+
+  &.done {
+    text-decoration: line-through;
+    color: lightgrey;
+  }
+
+  &.open {
+    color: black;
+  }
+
+  button.todo {
+    margin-right: 20px;
+    border: none;
+    background-color: white;
+  }
+}
+
+input {
+  font-size: 20px;
+  font-family: Arial, sans-serif;
+  border: solid 1px lightgrey;
+  margin-left: 105px;
+}
+
+button.add {
+  border: solid 1px lightgrey;
+  background-color: white;
+  border-radius: 0px;
+  height: 26px;
+  margin-left: 20px;
+  padding-bottom: 0px;
+}

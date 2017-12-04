@@ -1,12 +1,9 @@
-require("./main.scss");
+import React from "react";
+import ReactDOM from "react-dom";
+import Hello from "./components/Hello";
 
-import { add } from "./lib";
+let mainView = (
+    <Hello name="Joel"/>
+);
 
-var a = () => {
-    var div = document.createElement("div").innerText = "Hello";
-    document.querySelector("body").append(div);
-};
-
-a();
-
-add(1,1);
+ReactDOM.render(mainView, document.getElementById("react-app"));
